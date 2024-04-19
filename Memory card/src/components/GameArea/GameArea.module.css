@@ -1,0 +1,27 @@
+main {
+  width: 500px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  justify-items: center;
+  gap: 15px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+button {
+  height: 150px;
+  width: 150px;
+  font-size: 100px;
+  background-color: slateblue;
+  box-shadow: 8px 8px 24px -12px rgba(0, 0, 0, 1);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: rgb(119, 106, 240);
+  font-size: 108px;
+}
