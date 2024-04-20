@@ -7,10 +7,4 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  background-color: rgb(119, 106, 240);
-  font-size: 108px;
 }
