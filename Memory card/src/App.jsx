@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "./components/Header/Header";
 import { GameArea } from "./components/GameArea/GameArea";
+import { WinScreen } from "./components/WinScreen/WinScreen";
 import { Button } from "./components/Button/Button";
-import styles from "./App.module.css";
 
 export function App() {
+  const [isWin, setIsWin] = useState(false);
+  const [score, setScore] = useState([]);
+  const [bestScore, setBestScore] = useState(0);
   const [cardStash, setCardStash] = useState([
     { id: 1, cardName: "🍎" },
     { id: 2, cardName: "🍐" },
@@ -19,24 +22,47 @@ export function App() {
     { id: 11, cardName: "🥭" },
     { id: 12, cardName: "🍍" },
   ]);
-  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    if (score.length === cardStash.length) {
+      setIsWin(true);
+    }
+  }, [score]);
 
   function shuffle() {
-    const shuffledStash = cardStash.slice();
-    return shuffledStash.sort(() => Math.floor(Math.random() - 0.5));
+    const slicedStash = cardStash.slice();
+    return slicedStash.sort(() => Math.floor(Math.random() - 0.5));
   }
 
-  function handleButtonClick() {
+  function handleButtonClick(e) {
     const shuffledStash = shuffle();
     setCardStash(shuffledStash);
-    setScore(score + 1);
+
+    if (!score.includes(e.target.value)) {
+      setScore((prevScore) => [...prevScore, e.target.value]);
+    } else {
+      setScore([]);
+      if (bestScore < score.length) {
+        setBestScore(score.length);
+      }
+    }
+  }
+
+  function repeatGame() {
+    setIsWin(false);
+    setScore([]);
+    setBestScore(0);
+  }
+
+  if (isWin) {
+    return <WinScreen onClick={repeatGame} />;
   }
   return (
     <>
-      <Header score={score} bestScore={0} />
+      <Header score={score.length} bestScore={bestScore} />
       <GameArea>
         {cardStash.map((card) => (
-          <Button onClick={handleButtonClick} key={card.id}>
+          <Button value={card.id} onClick={handleButtonClick} key={card.id}>
             {card.cardName}
           </Button>
         ))}
