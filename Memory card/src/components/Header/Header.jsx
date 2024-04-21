@@ -2,14 +2,14 @@ import styles from "./Header.module.css";
 
 export function Header({ score, bestScore }) {
   return (
-    <header>
+    <div className={styles.header}>
       <div>
-        <h1>Memory Game 1</h1>
+        <h1>Memory Game</h1>
       </div>
-      <div>
+      <div className={styles.scoreContainer}>
         <p>{`Score: ${score}`}</p>
         <p>{`Best score: ${bestScore}`}</p>
       </div>
-    </header>
+    </div>
   );
 }
